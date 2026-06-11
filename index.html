@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chloe On A Pedastal</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="app-title">
+        <div>
+          <p class="eyebrow">50 piece photo puzzle</p>
+          <h1 id="app-title">Chloe On A Pedastal</h1>
+        </div>
+        <div class="meter" aria-live="polite">
+          <span id="progressText">0 / 50 placed</span>
+          <span class="meter-track" aria-hidden="true">
+            <span id="progressBar"></span>
+          </span>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Puzzle workspace">
+        <div class="board-wrap">
+          <div id="board" class="board" aria-label="Puzzle board"></div>
+        </div>
+
+        <aside class="side-panel" aria-label="Puzzle pieces and controls">
+          <div class="portrait">
+            <img id="preview" src="Chloe.jpg" alt="Chloe the long-haired calico cat on her scratching post">
+          </div>
+
+          <div class="controls" aria-label="Puzzle controls">
+            <button id="shuffleButton" type="button">Shuffle</button>
+            <button id="hintButton" type="button">Hint</button>
+            <button id="solveButton" type="button">Solve</button>
+            <button id="resetButton" type="button">Reset</button>
+            <button id="photoButton" type="button">Photo</button>
+            <input id="photoInput" type="file" accept="image/*">
+          </div>
+
+          <div id="tray" class="tray" aria-label="Loose puzzle pieces"></div>
+        </aside>
+      </section>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="puzzle.js"></script>
+  </body>
+</html>
