@@ -157,7 +157,7 @@ h1 {
   inset: 0;
   z-index: 0;
   background-image: var(--puzzle-image);
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   opacity: 0;
   transition: opacity 180ms ease;
@@ -166,6 +166,21 @@ h1 {
 
 .board.show-hint::before {
   opacity: 0.24;
+}
+
+.board.is-complete::before {
+  opacity: 1;
+  z-index: 2;
+  background-size: 100% 100%;
+}
+
+.board.is-complete .piece {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.board.is-complete .slot {
+  z-index: 1;
 }
 
 .slot {
@@ -247,6 +262,21 @@ h1 {
     rgba(255, 250, 240, 0.72);
 }
 
+.tray.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  max-height: 72px;
+  padding: 12px;
+}
+
+.tray.is-empty::after {
+  content: "All pieces placed.";
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 .piece {
   position: relative;
   display: block;
@@ -288,7 +318,11 @@ h1 {
 }
 
 .slot .piece.correct svg {
-  filter: drop-shadow(0 0 7px rgba(75, 128, 99, 0.52));
+  filter: none;
+}
+
+.slot .piece.correct svg path {
+  stroke: none;
 }
 
 .piece.dragging {
