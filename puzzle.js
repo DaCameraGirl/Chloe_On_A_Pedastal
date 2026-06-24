@@ -181,9 +181,11 @@ function updateProgress() {
   progressText.textContent = `${placed} / ${TOTAL} placed`;
   progressBar.style.width = `${(correct / TOTAL) * 100}%`;
 
-  board.classList.toggle("is-complete", correct === TOTAL);
+  const isComplete = correct === TOTAL;
+  board.classList.toggle("is-complete", isComplete);
+  tray.classList.toggle("is-empty", tray.querySelectorAll(".piece").length === 0);
 
-  if (correct === TOTAL) {
+  if (isComplete) {
     setStatus("Chloe is back on her pedestal.", true);
     clearSelection();
   } else if (selectedPiece) {
