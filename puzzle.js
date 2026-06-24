@@ -181,6 +181,8 @@ function updateProgress() {
   progressText.textContent = `${placed} / ${TOTAL} placed`;
   progressBar.style.width = `${(correct / TOTAL) * 100}%`;
 
+  board.classList.toggle("is-complete", correct === TOTAL);
+
   if (correct === TOTAL) {
     setStatus("Chloe is back on her pedestal.", true);
     clearSelection();
@@ -282,6 +284,18 @@ function moveDraggedPiece(event) {
   setDropTarget(target);
 }
 
+function bindPointerDragListeners() {
+  window.addEventListener("pointermove", handlePointerMove);
+  window.addEventListener("pointerup", handlePointerUp);
+  window.addEventListener("pointercancel", handlePointerCancel);
+}
+
+function unbindPointerDragListeners() {
+  window.removeEventListener("pointermove", handlePointerMove);
+  window.removeEventListener("pointerup", handlePointerUp);
+  window.removeEventListener("pointercancel", handlePointerCancel);
+}
+
 function startPointerDrag(event, piece) {
   if (event.button !== undefined && event.button !== 0) return;
 
@@ -296,12 +310,11 @@ function startPointerDrag(event, piece) {
     offsetY: event.clientY - rect.top,
     rect,
     dragging: false,
+    pointerId: event.pointerId,
   };
 
   piece.setPointerCapture?.(event.pointerId);
-  piece.addEventListener("pointermove", handlePointerMove);
-  piece.addEventListener("pointerup", handlePointerUp);
-  piece.addEventListener("pointercancel", handlePointerCancel);
+  bindPointerDragListeners();
 }
 
 function beginDrag(event) {
@@ -322,23 +335,23 @@ function beginDrag(event) {
 function endPointerDrag(event, canceled = false) {
   if (!dragState) return;
 
-  const { piece, origin, placeholder, dragging } = dragState;
-  piece.removeEventListener("pointermove", handlePointerMove);
-  piece.removeEventListener("pointerup", handlePointerUp);
-  piece.removeEventListener("pointercancel", handlePointerCancel);
+  const { piece, origin, placeholder, dragging, pointerId } = dragState;
+  unbindPointerDragListeners();
+  if (pointerId !== undefined) piece.releasePointerCapture?.(pointerId);
 
   if (!dragging) {
     dragState = null;
     return;
   }
 
+  const hoveredSlot = activeDropTarget;
   clearDropTarget();
   clearDraggedPieceStyle(piece);
   piece.dataset.justDragged = "true";
   window.setTimeout(() => delete piece.dataset.justDragged, 0);
 
   const element = canceled ? null : document.elementFromPoint(event.clientX, event.clientY);
-  const targetSlot = element?.closest(".slot");
+  const targetSlot = element?.closest(".slot") || hoveredSlot;
   const targetTray = element?.closest("#tray");
   const swapTarget = placeholder?.parentElement || origin;
 

@@ -184,6 +184,16 @@ h1 {
   outline-offset: -4px;
 }
 
+.slot:has(.piece) {
+  border-color: transparent;
+  background: transparent;
+}
+
+.board.is-complete .slot {
+  border-color: transparent;
+  background: transparent;
+}
+
 .side-panel {
   display: grid;
   gap: 14px;

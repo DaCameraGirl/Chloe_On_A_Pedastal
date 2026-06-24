@@ -3,3 +3,6 @@ Thumbs.db
 *.tmp
 *.log
 render-check.png
+node_modules/
+package-lock.json
+_shots/
