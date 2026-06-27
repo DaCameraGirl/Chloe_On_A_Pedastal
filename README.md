@@ -65,7 +65,7 @@
 ---
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Play%20it&fontSize=22&fontColor=e6edf3" width="720" alt="Play it" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=Play%20it&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="Play it" /></p>
 
 
 **Live:** [dacameragirl.github.io/Chloe_On_A_Pedastal](https://dacameragirl.github.io/Chloe_On_A_Pedastal/)
@@ -73,7 +73,7 @@
 No build step. Open `index.html` in a browser, or use the live link above.
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Controls&fontSize=22&fontColor=e6edf3" width="720" alt="Controls" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=Controls&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="Controls" /></p>
 
 
 | Button | What it does |
@@ -87,7 +87,7 @@ No build step. Open `index.html` in a browser, or use the live link above.
 **Tips:** Drag pieces onto the board, click a piece then click a slot, or double-click a piece to send it back to the tray.
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=How%20it%20works&fontSize=22&fontColor=e6edf3" width="720" alt="How it works" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=How%20it%20works&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="How it works" /></p>
 
 
 - **5 × 10 grid** — 50 interlocking SVG jigsaw pieces
@@ -96,7 +96,7 @@ No build step. Open `index.html` in a browser, or use the live link above.
 - **Responsive layout** — board + tray reflow on mobile
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Files&fontSize=22&fontColor=e6edf3" width="720" alt="Files" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=Files&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="Files" /></p>
 
 
 | File | Role |
@@ -109,7 +109,7 @@ No build step. Open `index.html` in a browser, or use the live link above.
 | `Chloe.jpg` | Original full photo |
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Recent%20fix&fontSize=22&fontColor=e6edf3" width="720" alt="Recent fix" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=Recent%20fix&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="Recent fix" /></p>
 
 
 [PR #1](https://github.com/DaCameraGirl/Chloe_On_A_Pedastal/pull/1) — drag-and-drop no longer leaves pieces frozen mid-air when you release over the board.
