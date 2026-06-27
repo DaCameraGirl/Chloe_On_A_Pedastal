@@ -1,7 +1,38 @@
 <p align="center">
-  <img src="assets/chloe-running.gif" alt="Chloe the calico cat running around" width="420"/>
+  <img src="docs/readme-banner.svg" alt="Chloe On A Pedestal — A celebratory mini-site — because Chloe belongs on a pedestal." width="720" />
 </p>
 
+<p align="center">
+  <strong>A celebratory mini-site — because Chloe belongs on a pedestal.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/DaCameraGirl/Chloe_On_A_Pedastal"><img src="https://img.shields.io/badge/Code-GitHub-58a6ff?style=for-the-badge&logo=github&logoColor=white" alt="Source code" /></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/type-mini site-ff5fa2?style=flat-square" alt="type-mini site" />
+  <img src="https://img.shields.io/badge/deploy-GitHub Pages-000000?style=flat-square&logo=github&logoColor=white" alt="deploy-GitHub Pages" />
+</p>
+
+### Languages
+
+<p align="center">
+  <img src="https://img.shields.io/badge/JavaScript-63%25-F7DF1E?style=flat-square&logo=javascript&logoColor=111" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/CSS-29%25-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS" />
+  <img src="https://img.shields.io/badge/HTML-8%25-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML" />
+</p>
+
+### Stack
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Static-site-ff5fa2?style=flat-square" alt="Static-site" />
+  <img src="https://img.shields.io/badge/GitHub Pages-000000?style=flat-square&logo=github&logoColor=white" alt="GitHub Pages" />
+</p>
+
+<p align="center">
+  Built by <strong>Angela Hudson</strong> · <a href="https://github.com/DaCameraGirl">DaCameraGirl</a>
+</p>
 # Chloe On A Pedastal
 
 <p align="center">
@@ -33,13 +64,17 @@
 
 ---
 
-## Play it
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Play%20it&fontSize=22&fontColor=e6edf3" width="720" alt="Play it" /></p>
+
 
 **Live:** [dacameragirl.github.io/Chloe_On_A_Pedastal](https://dacameragirl.github.io/Chloe_On_A_Pedastal/)
 
 No build step. Open `index.html` in a browser, or use the live link above.
 
-## Controls
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Controls&fontSize=22&fontColor=e6edf3" width="720" alt="Controls" /></p>
+
 
 | Button | What it does |
 |--------|----------------|
@@ -51,14 +86,18 @@ No build step. Open `index.html` in a browser, or use the live link above.
 
 **Tips:** Drag pieces onto the board, click a piece then click a slot, or double-click a piece to send it back to the tray.
 
-## How it works
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=How%20it%20works&fontSize=22&fontColor=e6edf3" width="720" alt="How it works" /></p>
+
 
 - **5 × 10 grid** — 50 interlocking SVG jigsaw pieces
 - **Pointer drag** — pieces snap to slots; release over the last hovered slot if the cursor misses
 - **Custom photo** — swap in any image without touching the code
 - **Responsive layout** — board + tray reflow on mobile
 
-## Files
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Files&fontSize=22&fontColor=e6edf3" width="720" alt="Files" /></p>
+
 
 | File | Role |
 |------|------|
@@ -69,7 +108,9 @@ No build step. Open `index.html` in a browser, or use the live link above.
 | `assets/chloe-puzzle.jpg` | Cropped photo source |
 | `Chloe.jpg` | Original full photo |
 
-## Recent fix
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=Recent%20fix&fontSize=22&fontColor=e6edf3" width="720" alt="Recent fix" /></p>
+
 
 [PR #1](https://github.com/DaCameraGirl/Chloe_On_A_Pedastal/pull/1) — drag-and-drop no longer leaves pieces frozen mid-air when you release over the board.
 
