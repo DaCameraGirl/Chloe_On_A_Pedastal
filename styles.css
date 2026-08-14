@@ -10,9 +10,9 @@
   --blue: #285a70;
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
   --cols: 5;
-  --rows: 10;
+  --rows: 5;
   --bg-size-x: 500%;
-  --bg-size-y: 1000%;
+  --bg-size-y: 500%;
   --image-ratio: 835 / 980;
   --piece-ratio: 1.7041;
   --tab-outset: 18%;
@@ -35,11 +35,13 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
-button {
+button,
+select {
   border: 1px solid rgba(255, 250, 240, 0.2);
   border-radius: 7px;
   padding: 0.78rem 0.82rem;
@@ -51,7 +53,9 @@ button {
 }
 
 button:hover,
-button:focus-visible {
+button:focus-visible,
+select:hover,
+select:focus-visible {
   background: #3a2b22;
   border-color: rgba(214, 107, 40, 0.72);
   transform: translateY(-1px);
@@ -59,6 +63,11 @@ button:focus-visible {
 
 button:active {
   transform: translateY(0);
+}
+
+button.active {
+  background: var(--green);
+  border-color: rgba(255, 250, 240, 0.4);
 }
 
 .shell {
@@ -85,11 +94,30 @@ button:active {
 }
 
 h1 {
-  margin: 0;
+  margin: 0 0 8px;
   font-size: clamp(2.25rem, 5vw, 5rem);
   font-weight: 700;
   line-height: 0.94;
   letter-spacing: 0;
+}
+
+.difficulty-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 0.92rem;
+  color: #f1bc86;
+}
+
+.difficulty-row label {
+  white-space: nowrap;
+}
+
+#difficultySelect {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.92rem;
+  min-width: 190px;
 }
 
 .meter {
@@ -144,11 +172,11 @@ h1 {
   grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
   width: min(100%, 620px);
   margin: 0 auto;
-  overflow: hidden;
   aspect-ratio: var(--image-ratio);
   border: 3px solid #241b15;
   border-radius: 8px;
   background: #4a4038;
+  overflow: visible;
 }
 
 .board::before {
@@ -162,10 +190,12 @@ h1 {
   opacity: 0;
   transition: opacity 180ms ease;
   pointer-events: none;
+  border-radius: 5px;
 }
 
-.board.show-hint::before {
-  opacity: 0.24;
+.board.show-hint::before,
+.board.show-preview::before {
+  opacity: 0.35;
 }
 
 .board.is-complete::before {
@@ -188,22 +218,22 @@ h1 {
   z-index: 1;
   min-width: 0;
   min-height: 0;
-  border: 1px solid rgba(255, 250, 240, 0.16);
-  background:
-    linear-gradient(135deg, rgba(255, 250, 240, 0.09), rgba(255, 250, 240, 0.02)),
-    rgba(24, 20, 17, 0.16);
+  border: 1px solid rgba(255, 250, 240, 0.14);
+  background: rgba(24, 20, 17, 0.22);
 }
 
 .slot.drop-target {
   outline: 3px solid rgba(75, 128, 99, 0.85);
   outline-offset: -4px;
+  z-index: 5;
 }
 
-.slot:has(.piece) {
+.slot.filled {
   border-color: transparent;
   background: transparent;
 }
 
+/* slot ghost - jigsaw outline in empty cells */
 .slot-ghost {
   position: absolute;
   inset: calc(var(--tab-outset) * -1);
@@ -211,23 +241,19 @@ h1 {
   height: calc(100% + (var(--tab-outset) * 2));
   pointer-events: none;
   z-index: 0;
-  opacity: 1;
 }
 
 .slot-ghost path {
-  fill: rgba(255, 250, 240, 0.12);
-  stroke: rgba(255, 220, 180, 0.65);
-  stroke-width: 2.8;
+  fill: rgba(255, 240, 220, 0.09);
+  stroke: rgba(255, 210, 150, 0.55);
+  stroke-width: 2.5;
   stroke-linejoin: round;
+  stroke-dasharray: 6 4;
 }
 
-.slot:has(.piece) .slot-ghost {
+.slot.filled .slot-ghost {
   opacity: 0;
-}
-
-.board.is-complete .slot {
-  border-color: transparent;
-  background: transparent;
+  transition: opacity 150ms ease;
 }
 
 .board.is-complete .slot-ghost {
@@ -257,7 +283,7 @@ h1 {
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 7px;
 }
 
@@ -331,9 +357,9 @@ h1 {
 .piece:hover,
 .piece:focus-visible,
 .piece.selected {
-  border-color: var(--orange);
-  outline: 3px solid rgba(214, 107, 40, 0.34);
+  outline: 3px solid rgba(214, 107, 40, 0.5);
   outline-offset: -3px;
+  z-index: 10;
 }
 
 .slot .piece {
@@ -348,6 +374,17 @@ h1 {
 
 .slot .piece.correct svg path {
   stroke: none;
+}
+
+/* snap glow when piece locks into correct slot */
+@keyframes snapGlow {
+  0%   { filter: drop-shadow(0 0 0 rgba(75, 200, 120, 0)) brightness(1); }
+  30%  { filter: drop-shadow(0 0 14px rgba(75, 200, 120, 0.9)) brightness(1.15); }
+  100% { filter: drop-shadow(0 0 0 rgba(75, 200, 120, 0)) brightness(1); }
+}
+
+.piece.snap svg {
+  animation: snapGlow 550ms ease-out;
 }
 
 .piece.dragging {
@@ -398,8 +435,7 @@ h1 {
   }
 
   .controls {
-    grid-template-columns: repeat(5, minmax(64px, 1fr));
-    overflow-x: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .tray {
@@ -424,6 +460,15 @@ h1 {
   }
 
   .controls {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #difficultySelect {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .difficulty-row {
+    flex-wrap: wrap;
   }
 }

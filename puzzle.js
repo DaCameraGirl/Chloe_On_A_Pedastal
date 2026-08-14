@@ -1,6 +1,3 @@
-const COLS = 5;
-const ROWS = 10;
-const TOTAL = COLS * ROWS;
 const DEFAULT_IMAGE = "assets/chloe-cartoon.jpg";
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -16,6 +13,12 @@ const hintButton = document.querySelector("#hintButton");
 const solveButton = document.querySelector("#solveButton");
 const photoButton = document.querySelector("#photoButton");
 const photoInput = document.querySelector("#photoInput");
+const difficultySelect = document.querySelector("#difficultySelect");
+const previewButton = document.querySelector("#previewButton");
+
+let COLS = 5;
+let ROWS = 5;
+let TOTAL = COLS * ROWS;
 
 let selectedPiece = null;
 let currentImage = DEFAULT_IMAGE;
@@ -23,10 +26,12 @@ let objectUrl = null;
 let dragState = null;
 let activeDropTarget = null;
 
-document.documentElement.style.setProperty("--cols", COLS);
-document.documentElement.style.setProperty("--rows", ROWS);
-document.documentElement.style.setProperty("--bg-size-x", `${COLS * 100}%`);
-document.documentElement.style.setProperty("--bg-size-y", `${ROWS * 100}%`);
+function applyGridVars() {
+  document.documentElement.style.setProperty("--cols", COLS);
+  document.documentElement.style.setProperty("--rows", ROWS);
+  document.documentElement.style.setProperty("--bg-size-x", `${COLS * 100}%`);
+  document.documentElement.style.setProperty("--bg-size-y", `${ROWS * 100}%`);
+}
 
 function imageCss(url) {
   return `url("${url}")`;
@@ -170,6 +175,13 @@ function updatePieceState(piece) {
   const slot = piece.closest(".slot");
   const correct = slot && getSlotIndex(slot) === getPieceIndex(piece);
   piece.classList.toggle("correct", Boolean(correct));
+  if (slot) {
+    slot.classList.toggle("filled", true);
+    if (correct) {
+      piece.classList.add("snap");
+      setTimeout(() => piece.classList.remove("snap"), 550);
+    }
+  }
 }
 
 function updateProgress() {
@@ -203,8 +215,13 @@ function placePiece(piece, slot, swapTarget = piece.parentElement) {
   if (existing && existing !== piece && origin) {
     origin.append(existing);
     updatePieceState(existing);
+    // mark origin slot as empty if it was a slot
+    if (origin.classList && origin.classList.contains("slot")) {
+      origin.classList.remove("filled");
+    }
   }
 
+  // if the target slot had a piece removed via swap, its filled class was already handled above
   slot.append(piece);
   updatePieceState(piece);
   clearSelection();
@@ -212,8 +229,12 @@ function placePiece(piece, slot, swapTarget = piece.parentElement) {
 }
 
 function returnPiece(piece) {
+  const origin = piece.parentElement;
   tray.append(piece);
-  updatePieceState(piece);
+  if (origin && origin.classList && origin.classList.contains("slot")) {
+    origin.classList.remove("filled");
+  }
+  piece.classList.remove("correct");
   clearSelection();
   updateProgress();
 }
@@ -223,7 +244,7 @@ function makeSlotGhost(index) {
   svg.setAttribute("viewBox", "-18 -18 136 136");
   svg.setAttribute("preserveAspectRatio", "none");
   svg.setAttribute("aria-hidden", "true");
-  svg.classList.add("slot-ghost");
+  svg.setAttribute("class", "slot-ghost");
   const path = document.createElementNS(SVG_NS, "path");
   path.setAttribute("d", piecePath(index));
   svg.append(path);
@@ -441,7 +462,7 @@ function makePiece(index) {
 function setImage(url) {
   currentImage = url;
   document.documentElement.style.setProperty("--puzzle-image", imageCss(url));
-  preview.src = url;
+  if (preview) preview.src = url;
   document.querySelectorAll(".piece").forEach((piece) => renderPieceArt(piece));
 
   const probe = new Image();
@@ -455,6 +476,7 @@ function setImage(url) {
 }
 
 function buildPuzzle(randomize = true) {
+  applyGridVars();
   board.replaceChildren();
   tray.replaceChildren();
   clearSelection();
@@ -473,8 +495,10 @@ function solvePuzzle() {
   const pieces = [...document.querySelectorAll(".piece")];
   pieces.forEach((piece) => {
     const slot = board.querySelector(`.slot[data-index="${piece.dataset.index}"]`);
-    slot.append(piece);
-    updatePieceState(piece);
+    if (slot) {
+      slot.append(piece);
+      updatePieceState(piece);
+    }
   });
   clearSelection();
   updateProgress();
@@ -483,6 +507,24 @@ function solvePuzzle() {
 function showHint() {
   board.classList.add("show-hint");
   window.setTimeout(() => board.classList.remove("show-hint"), 1800);
+}
+
+function togglePreviewImage() {
+  board.classList.toggle("show-preview");
+  if (previewButton) {
+    previewButton.textContent = board.classList.contains("show-preview") ? "Hide Preview" : "Preview";
+    previewButton.classList.toggle("active", board.classList.contains("show-preview"));
+  }
+}
+
+function setDifficulty(cols, rows) {
+  COLS = cols;
+  ROWS = rows;
+  TOTAL = COLS * ROWS;
+  const eyebrow = document.querySelector(".eyebrow");
+  if (eyebrow) eyebrow.textContent = `${TOTAL} piece photo puzzle`;
+  buildPuzzle(true);
+  setImage(currentImage);
 }
 
 tray.addEventListener("dragover", (event) => event.preventDefault());
@@ -496,8 +538,13 @@ shuffleButton.addEventListener("click", () => buildPuzzle(true));
 resetButton.addEventListener("click", () => buildPuzzle(false));
 hintButton.addEventListener("click", showHint);
 solveButton.addEventListener("click", solvePuzzle);
-photoButton.addEventListener("click", () => photoInput.click());
-photoInput.addEventListener("change", () => {
+if (previewButton) previewButton.addEventListener("click", togglePreviewImage);
+if (difficultySelect) difficultySelect.addEventListener("change", (e) => {
+  const [c, r] = e.target.value.split("x").map(Number);
+  setDifficulty(c, r);
+});
+if (photoButton) photoButton.addEventListener("click", () => photoInput.click());
+if (photoInput) photoInput.addEventListener("change", () => {
   const [file] = photoInput.files;
   if (!file) return;
   if (objectUrl) URL.revokeObjectURL(objectUrl);
@@ -506,5 +553,4 @@ photoInput.addEventListener("change", () => {
   buildPuzzle(true);
 });
 
-setImage(currentImage);
-buildPuzzle(true);
+setDifficulty(5, 5);

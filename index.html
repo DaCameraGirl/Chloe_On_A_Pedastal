@@ -10,8 +10,17 @@
     <main class="shell">
       <section class="hero" aria-labelledby="app-title">
         <div>
-          <p class="eyebrow">50 piece photo puzzle</p>
+          <p class="eyebrow">25 piece photo puzzle</p>
           <h1 id="app-title">Chloe On A Pedastal</h1>
+          <div class="difficulty-row">
+            <label for="difficultySelect">Difficulty:</label>
+            <select id="difficultySelect">
+              <option value="3x3">Easy – 3×3 (9)</option>
+              <option value="4x4">Medium – 4×4 (16)</option>
+              <option value="5x5" selected>Hard – 5×5 (25)</option>
+              <option value="6x6">Expert – 6×6 (36)</option>
+            </select>
+          </div>
         </div>
         <div class="meter" aria-live="polite">
           <span id="progressText">0 / 50 placed</span>
@@ -32,6 +41,7 @@
           </div>
 
           <div class="controls" aria-label="Puzzle controls">
+            <button id="previewButton" type="button">Preview</button>
             <button id="shuffleButton" type="button">Shuffle</button>
             <button id="hintButton" type="button">Hint</button>
             <button id="solveButton" type="button">Solve</button>
