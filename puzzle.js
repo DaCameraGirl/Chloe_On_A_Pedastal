@@ -144,6 +144,11 @@ function renderPieceArt(piece) {
   clipPath.append(clipShape);
   defs.append(clipPath);
 
+  // solid backing so board background / preview doesn't bleed through indentations
+  const backing = document.createElementNS(SVG_NS, "path");
+  backing.setAttribute("d", pathData);
+  backing.setAttribute("fill", "#f7f3ea");
+
   const image = document.createElementNS(SVG_NS, "image");
   image.setAttribute("href", currentImage);
   image.setAttribute("x", String(-col * 100));
@@ -152,6 +157,7 @@ function renderPieceArt(piece) {
   image.setAttribute("height", String(ROWS * 100));
   image.setAttribute("preserveAspectRatio", "none");
   image.setAttribute("clip-path", `url(#${clipId})`);
+  image.style.imageRendering = "-webkit-optimize-contrast";
 
   const edge = document.createElementNS(SVG_NS, "path");
   edge.setAttribute("d", pathData);
@@ -167,7 +173,7 @@ function renderPieceArt(piece) {
   shine.setAttribute("stroke-width", "0.9");
   shine.setAttribute("stroke-linejoin", "round");
 
-  svg.append(defs, image, edge, shine);
+  svg.append(defs, backing, image, edge, shine);
   piece.replaceChildren(svg);
 }
 
@@ -469,11 +475,10 @@ function makePiece(index) {
   return piece;
 }
 
-function setImage(url) {
+function setImage(url, rebuildPieces = true) {
   currentImage = url;
   document.documentElement.style.setProperty("--puzzle-image", imageCss(url));
   if (preview) preview.src = url;
-  document.querySelectorAll(".piece").forEach((piece) => renderPieceArt(piece));
 
   const probe = new Image();
   probe.onload = () => {
@@ -481,12 +486,24 @@ function setImage(url) {
     const pieceRatio = (probe.naturalWidth * ROWS) / (probe.naturalHeight * COLS);
     document.documentElement.style.setProperty("--image-ratio", imageRatio);
     document.documentElement.style.setProperty("--piece-ratio", pieceRatio.toFixed(4));
+    if (rebuildPieces) {
+      document.querySelectorAll(".piece").forEach((piece) => renderPieceArt(piece));
+    }
   };
   probe.src = url;
 }
 
 function buildPuzzle(randomize = true) {
   applyGridVars();
+
+  // set aspect ratio from preview image before creating pieces, so they size correctly immediately
+  if (preview && preview.naturalWidth) {
+    const imageRatio = `${preview.naturalWidth} / ${preview.naturalHeight}`;
+    const pieceRatio = (preview.naturalWidth * ROWS) / (preview.naturalHeight * COLS);
+    document.documentElement.style.setProperty("--image-ratio", imageRatio);
+    document.documentElement.style.setProperty("--piece-ratio", pieceRatio.toFixed(4));
+  }
+
   board.replaceChildren();
   tray.replaceChildren();
   clearSelection();

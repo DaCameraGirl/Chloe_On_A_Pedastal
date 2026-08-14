@@ -195,7 +195,7 @@ h1 {
 
 .board.show-hint::before,
 .board.show-preview::before {
-  opacity: 0.35;
+  opacity: 0.18;
 }
 
 .board.is-complete::before {
@@ -244,11 +244,11 @@ h1 {
 }
 
 .slot-ghost path {
-  fill: rgba(255, 240, 220, 0.09);
-  stroke: rgba(255, 210, 150, 0.55);
-  stroke-width: 2.5;
+  fill: rgba(255, 240, 220, 0.04);
+  stroke: rgba(255, 210, 150, 0.32);
+  stroke-width: 1.8;
   stroke-linejoin: round;
-  stroke-dasharray: 6 4;
+  stroke-dasharray: 5 3;
 }
 
 .slot.filled .slot-ghost {
@@ -351,7 +351,13 @@ h1 {
   height: calc(100% + (var(--tab-outset) * 2));
   overflow: visible;
   pointer-events: none;
-  filter: drop-shadow(0 5px 10px rgba(35, 27, 22, 0.24));
+  filter: drop-shadow(0 3px 6px rgba(35, 27, 22, 0.18));
+  shape-rendering: geometricPrecision;
+}
+
+.piece svg image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .piece:hover,
@@ -368,7 +374,7 @@ h1 {
   box-shadow: none;
 }
 
-.slot .piece.correct svg {
+.slot .piece svg {
   filter: none;
 }
 
