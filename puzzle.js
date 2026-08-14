@@ -127,6 +127,7 @@ function renderPieceArt(piece) {
 
   const svg = document.createElementNS(SVG_NS, "svg");
   svg.setAttribute("viewBox", "-18 -18 136 136");
+  svg.setAttribute("preserveAspectRatio", "none");
   svg.setAttribute("aria-hidden", "true");
 
   const defs = document.createElementNS(SVG_NS, "defs");
