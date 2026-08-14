@@ -218,10 +218,23 @@ function returnPiece(piece) {
   updateProgress();
 }
 
+function makeSlotGhost(index) {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("viewBox", "-18 -18 136 136");
+  svg.setAttribute("preserveAspectRatio", "none");
+  svg.setAttribute("aria-hidden", "true");
+  svg.classList.add("slot-ghost");
+  const path = document.createElementNS(SVG_NS, "path");
+  path.setAttribute("d", piecePath(index));
+  svg.append(path);
+  return svg;
+}
+
 function makeSlot(index) {
   const slot = document.createElement("div");
   slot.className = "slot";
   slot.dataset.index = index;
+  slot.append(makeSlotGhost(index));
   slot.addEventListener("click", () => {
     if (selectedPiece) placePiece(selectedPiece, slot);
   });

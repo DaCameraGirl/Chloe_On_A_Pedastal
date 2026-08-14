@@ -204,9 +204,34 @@ h1 {
   background: transparent;
 }
 
+.slot-ghost {
+  position: absolute;
+  inset: calc(var(--tab-outset) * -1);
+  width: calc(100% + (var(--tab-outset) * 2));
+  height: calc(100% + (var(--tab-outset) * 2));
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+}
+
+.slot-ghost path {
+  fill: rgba(255, 250, 240, 0.06);
+  stroke: rgba(255, 250, 240, 0.28);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+.slot:has(.piece) .slot-ghost {
+  opacity: 0;
+}
+
 .board.is-complete .slot {
   border-color: transparent;
   background: transparent;
+}
+
+.board.is-complete .slot-ghost {
+  opacity: 0;
 }
 
 .side-panel {
