@@ -387,6 +387,21 @@ h1 {
   animation: snapGlow 550ms ease-out;
 }
 
+/* wrong placement shake */
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.piece.wrong {
+  outline: 3px solid rgba(210, 50, 50, 0.7);
+  outline-offset: -3px;
+  animation: wrongShake 350ms ease;
+}
+
 .piece.dragging {
   cursor: grabbing;
   opacity: 0.94;

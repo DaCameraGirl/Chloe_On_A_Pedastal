@@ -209,23 +209,33 @@ function updateProgress() {
 }
 
 function placePiece(piece, slot, swapTarget = piece.parentElement) {
-  const existing = slot.querySelector(".piece");
+  const pieceIdx = getPieceIndex(piece);
+  const slotIdx = getSlotIndex(slot);
   const origin = swapTarget || piece.parentElement;
+
+  // Only allow correct placement
+  if (pieceIdx !== slotIdx) {
+    piece.classList.add("wrong");
+    setTimeout(() => piece.classList.remove("wrong"), 400);
+    setStatus("Not quite — that's piece " + (pieceIdx + 1) + "!", false);
+    return false;
+  }
+
+  const existing = slot.querySelector(".piece");
 
   if (existing && existing !== piece && origin) {
     origin.append(existing);
     updatePieceState(existing);
-    // mark origin slot as empty if it was a slot
     if (origin.classList && origin.classList.contains("slot")) {
       origin.classList.remove("filled");
     }
   }
 
-  // if the target slot had a piece removed via swap, its filled class was already handled above
   slot.append(piece);
   updatePieceState(piece);
   clearSelection();
   updateProgress();
+  return true;
 }
 
 function returnPiece(piece) {
